@@ -38,3 +38,6 @@ particular format, or an additional feature, or you've found a file
 which taglib-go *should* parse but doesn't, please create an
 [issue](https://github.com/hjfreyer/taglib-go/issues), or better yet,
 send a patch.
+
+NOTE: Though the copyright for this code is owned by Google, Google
+does not endorse its use.
