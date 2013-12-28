@@ -69,12 +69,12 @@ func (t *Id3v23Tag) Genre() string {
 }
 
 func (t *Id3v23Tag) Year() time.Time {
-	yearStr := getSimpleId3v23TextFrame(t.Frames["TDRC"])
-	if len(yearStr) < 4 {
+	yearStr := getSimpleId3v23TextFrame(t.Frames["TYER"])
+	if len(yearStr) != 4 {
 		return time.Time{}
 	}
 
-	yearInt, err := strconv.Atoi(yearStr[0:4])
+	yearInt, err := strconv.Atoi(yearStr)
 	if err != nil {
 		return time.Time{}
 	}
