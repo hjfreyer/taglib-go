@@ -25,8 +25,11 @@ func ExampleDecode() {
 	if err != nil {
 		panic(err)
 	}
-
-	tag, err := Decode(f)
+	fi, err := f.Stat()
+	if err != nil {
+		panic(err)
+	}
+	tag, err := Decode(f, fi.Size())
 	if err != nil {
 		panic(err)
 	}
@@ -36,6 +39,7 @@ func ExampleDecode() {
 	fmt.Println("Album:", tag.Album())
 	fmt.Println("Genre:", tag.Genre())
 	fmt.Println("Year:", tag.Year())
+	fmt.Println("Disc:", tag.Disc())
 	fmt.Println("Track:", tag.Track())
 
 	// Output:
@@ -44,5 +48,6 @@ func ExampleDecode() {
 	// Album: Test Album
 	// Genre: Classical
 	// Year: 2008-01-01 00:00:00 +0000 UTC
+	// Disc: 3
 	// Track: 7
 }
