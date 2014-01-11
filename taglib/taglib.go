@@ -42,8 +42,13 @@ type GenericTag interface {
 	Track() uint32
 	Disc() uint32
 
-	// Returns the total size of the header and tags in the file, i.e.
-	// the position at which audio data starts.
+	// CustomFrames returns non-standard, user-defined frames as a map from
+	// descriptions (e.g. "PERFORMER", "MusicBrainz Album Id", etc.) to
+	// values.
+	CustomFrames() map[string]string
+
+	// TagSize returns the total size of the tag's header and frames,
+	// i.e. the position at which audio data starts.
 	TagSize() uint32
 }
 

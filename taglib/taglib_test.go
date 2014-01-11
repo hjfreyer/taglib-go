@@ -41,6 +41,7 @@ func ExampleDecode() {
 	fmt.Println("Year:", tag.Year())
 	fmt.Println("Disc:", tag.Disc())
 	fmt.Println("Track:", tag.Track())
+	fmt.Println("Performer:", tag.CustomFrames()["PERFORMER"])
 
 	// Output:
 	// Title: Test Name
@@ -50,4 +51,5 @@ func ExampleDecode() {
 	// Year: 2008-01-01 00:00:00 +0000 UTC
 	// Disc: 3
 	// Track: 7
+	// Performer: Somebody
 }

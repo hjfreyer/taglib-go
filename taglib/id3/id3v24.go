@@ -98,6 +98,20 @@ func (t *Id3v24Tag) Disc() uint32 {
 	return uint32(disc)
 }
 
+func (t *Id3v24Tag) CustomFrames() map[string]string {
+	info := make(map[string]string)
+	for _, frame := range t.Frames["TXXX"] {
+		// See "4.2.6. User defined text information frame" at
+		// http://id3.org/id3v2.4.0-frames. TXXX frames contain
+		// NUL-separated descriptions and values.
+		parts, err := GetId3v24TextIdentificationFrame(frame)
+		if err == nil && len(parts) == 2 {
+			info[parts[0]] = parts[1]
+		}
+	}
+	return info
+}
+
 func (t *Id3v24Tag) TagSize() uint32 {
 	return 10 + t.Header.Size
 }
