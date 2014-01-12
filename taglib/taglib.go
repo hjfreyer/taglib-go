@@ -40,6 +40,11 @@ type GenericTag interface {
 	Genre() string
 	Year() time.Time
 	Track() uint32
+	Disc() uint32
+
+	// Returns the total size of the header and tags in the file, i.e.
+	// the position at which audio data starts.
+	TagSize() uint32
 }
 
 // Decode reads r and determines which tag format the data is in, if

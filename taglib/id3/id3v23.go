@@ -90,6 +90,18 @@ func (t *Id3v23Tag) Track() uint32 {
 	return uint32(track)
 }
 
+func (t *Id3v23Tag) Disc() uint32 {
+	disc, err := parseLeadingInt(getSimpleId3v23TextFrame(t.Frames["TPOS"]))
+	if err != nil {
+		return 0
+	}
+	return uint32(disc)
+}
+
+func (t *Id3v23Tag) TagSize() uint32 {
+	return 10 + t.Header.Size
+}
+
 type Id3v23Header struct {
 	MinorVersion byte
 	Flags        Id3v23HeaderFlags
