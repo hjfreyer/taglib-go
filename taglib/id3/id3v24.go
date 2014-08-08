@@ -300,8 +300,8 @@ func parseId3v24FrameHeader(br *bufio.Reader) (result Id3v24FrameHeader, err err
 	idBytes, sizeBytes, flags := headerBytes[0:4], headerBytes[4:8], headerBytes[8:10]
 	result.Id = string(idBytes)
 
-	// Read the size as 4 base128 bytes.
-	result.Size = uint32(parseBase128Int(sizeBytes))
+	// Read the size as 4 base256 bytes (note that this is different to the tag header)
+	result.Size = uint32(parseBase256Int(sizeBytes))
 
 	result.Flags.TagAlterPreservation = (flags[0] & (1 << 6)) != 0
 	result.Flags.FileAlterPreservation = (flags[0] & (1 << 5)) != 0
