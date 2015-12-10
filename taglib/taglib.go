@@ -39,6 +39,12 @@ type GenericTag interface {
 	Track() uint32
 	Disc() uint32
 
+	// UniqueFileIdentifiers returns a map from the URL of the owner of a
+	// database assigning unique identifiers to files (e.g.
+	// "http://musicbrainz.org") to the identifier uniquely identifying the
+	// file.
+	UniqueFileIdentifiers() map[string]string
+
 	// CustomFrames returns non-standard, user-defined frames as a map from
 	// descriptions (e.g. "PERFORMER", "MusicBrainz Album Id", etc.) to
 	// values.

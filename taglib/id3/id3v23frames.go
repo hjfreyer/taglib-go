@@ -17,3 +17,7 @@ package id3
 func GetId3v23TextIdentificationFrame(frame *Id3v23Frame) ([]string, error) {
 	return getTextIdentificationFrame(frame.Content)
 }
+
+func GetId3v23UniqueFileIdentifierFrame(frame *Id3v23Frame) ([]string, error) {
+	return getUniqueFileIdentifierFrame(frame.Content)
+}

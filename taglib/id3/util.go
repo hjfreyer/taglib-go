@@ -57,6 +57,22 @@ func getTextIdentificationFrame(content []byte) ([]string, error) {
 	return strings.Split(normalized, string([]byte{0})), nil
 }
 
+// getUniqueFileIdentifierFrame parses a unique file identifier frame's content,
+// consisting of a bare owner string followed by NUL and the identifier itself.
+func getUniqueFileIdentifierFrame(content []byte) ([]string, error) {
+	var ownerEnd int
+	for ownerEnd < len(content) && content[ownerEnd] != 0x0 {
+		ownerEnd++
+	}
+	if ownerEnd == 0 {
+		return nil, id3v24Err("zero-length owner string")
+	}
+	if ownerEnd == len(content) {
+		return nil, id3v24Err("NUL separator not present")
+	}
+	return []string{string(content[:ownerEnd]), string(content[ownerEnd+1:])}, nil
+}
+
 // Parses a string from frame data. The first byte represents the encoding:
 //   0x01  ISO-8859-1
 //   0x02  UTF-16 w/ BOM
