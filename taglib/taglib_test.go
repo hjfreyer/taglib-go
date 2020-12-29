@@ -17,11 +17,12 @@ package taglib
 import (
 	"fmt"
 	"os"
+	"strings"
 	_ "testing"
 )
 
 func ExampleDecode() {
-	f, err := os.Open("testdata/test24.mp3")
+	f, err := os.Open("testdata/BeatThee.mp3")
 	if err != nil {
 		panic(err)
 	}
@@ -34,22 +35,14 @@ func ExampleDecode() {
 		panic(err)
 	}
 
-	fmt.Println("Title:", tag.Title())
-	fmt.Println("Artist:", tag.Artist())
-	fmt.Println("Album:", tag.Album())
-	fmt.Println("Genre:", tag.Genre())
-	fmt.Println("Year:", tag.Year())
-	fmt.Println("Disc:", tag.Disc())
+	fmt.Println("Title:", strings.TrimSpace(tag.Title()))
+	fmt.Println("Artist:", strings.TrimSpace(tag.Artist()))
+	fmt.Println("Album:", strings.TrimSpace(tag.Album()))
 	fmt.Println("Track:", tag.Track())
-	fmt.Println("Performer:", tag.CustomFrames()["PERFORMER"])
 
 	// Output:
-	// Title: Test Name
-	// Artist: Test Artist
-	// Album: Test Album
-	// Genre: Classical
-	// Year: 2008-01-01 00:00:00 +0000 UTC
-	// Disc: 3
-	// Track: 7
-	// Performer: Somebody
+	// Title: Beat Thee
+	// Artist: Alexander Nakarada
+	// Album: Complete Discography (CC BY Attribution 4.0)
+	// Track: 189
 }
