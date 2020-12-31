@@ -13,8 +13,9 @@ go get github.com/hjfreyer/taglib-go/taglib
 import "github.com/hjfreyer/taglib-go/taglib"
 ...
 func main() {
-    f, err := os.Open("song.mp3")
-    tag, err := taglib.Decode(f)
+    f, _ := os.Open("song.mp3")
+    fi, _ := f.Stat()
+    tag, err := taglib.Decode(f,fi.fi.Size())
     fmt.Print(tag.Title())
 }
 ```
