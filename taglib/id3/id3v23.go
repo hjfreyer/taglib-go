@@ -98,6 +98,19 @@ func (t *Id3v23Tag) Disc() uint32 {
 	return uint32(disc)
 }
 
+func (t *Id3v23Tag) UniqueFileIdentifiers() map[string]string {
+	ids := make(map[string]string)
+	for _, frame := range t.Frames["UFID"] {
+		// See http://id3.org/id3v2.3.0#Unique_file_identifier.
+		// UFID frames contain NUL-separated owners and IDs.
+		parts, err := GetId3v23UniqueFileIdentifierFrame(frame)
+		if err == nil && len(parts) == 2 {
+			ids[parts[0]] = parts[1]
+		}
+	}
+	return ids
+}
+
 func (t *Id3v23Tag) CustomFrames() map[string]string {
 	info := make(map[string]string)
 	for _, frame := range t.Frames["TXXX"] {
