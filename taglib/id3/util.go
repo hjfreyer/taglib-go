@@ -54,6 +54,7 @@ func getTextIdentificationFrame(content []byte) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+	normalized = strings.TrimRight(normalized, string([]byte{0}))
 	return strings.Split(normalized, string([]byte{0})), nil
 }
 
