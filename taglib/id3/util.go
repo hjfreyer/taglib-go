@@ -102,6 +102,9 @@ func parseIso8859(strBytes []byte) string {
 }
 
 func parseUtf16WithBOM(strBytes []byte) (string, error) {
+	if len(strBytes) < 2 {
+		return "", id3v24Err("string too short to contain byte order marker")
+	}
 	if strBytes[0] == 0xFE && strBytes[1] == 0xFF {
 		return parseUtf16(strBytes[2:], binary.BigEndian)
 	}
@@ -112,6 +115,9 @@ func parseUtf16WithBOM(strBytes []byte) (string, error) {
 }
 
 func parseUtf16(strBytes []byte, bo binary.ByteOrder) (string, error) {
+	if len(strBytes)%2 != 0 {
+		return "", fmt.Errorf("invalid odd UTF-16 string length %v", len(strBytes))
+	}
 	shorts := make([]uint16, 0, len(strBytes)/2)
 	for i := 0; i < len(strBytes); i += 2 {
 		short := bo.Uint16(strBytes[i : i+2])
