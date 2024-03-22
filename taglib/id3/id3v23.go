@@ -236,14 +236,17 @@ func parseId3v23ExtendedHeader(br *bufio.Reader) (result Id3v23ExtendedHeader, e
 	}
 
 	result.Size = uint32(parseBase128Int(sizeBytes))
+	if result.Size < 6 {
+		return result, fmt.Errorf("header size too small (%v)", result.Size)
+	}
 
-	headerBytes := make([]byte, result.Size)
+	headerBytes := make([]byte, 6)
 	if _, err = io.ReadFull(br, headerBytes); err != nil {
 		return
 	}
 
 	// Store the flags bytes and the size of the padding.
-	flags, paddingSize, headerBytes := headerBytes[0:2], headerBytes[2:6], headerBytes[6:]
+	flags, paddingSize := headerBytes[0:2], headerBytes[2:6]
 
 	result.Flags.CrcDataPresent = (flags[0] & (1 << 7)) != 0
 
