@@ -285,14 +285,14 @@ func parseId3v24Frame(br *bufio.Reader) (*Id3v24Frame, error) {
 		return nil, err
 	}
 
-	content := make([]byte, header.Size)
-	if _, err := io.ReadFull(br, content); err != nil {
+	var content bytes.Buffer
+	if _, err := io.CopyN(&content, br, int64(header.Size)); err != nil {
 		return nil, err
 	}
 
 	return &Id3v24Frame{
 		Header:  header,
-		Content: content,
+		Content: content.Bytes(),
 	}, nil
 }
 
