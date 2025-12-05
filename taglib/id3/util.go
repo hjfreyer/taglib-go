@@ -41,6 +41,15 @@ func parseBase128Int(bytes []byte) uint64 {
 	return result
 }
 
+func parseBase256Int(bytes []byte) uint64 {
+	var result uint64
+	for _, b := range bytes {
+		result = result << 8
+		result |= uint64(b)
+	}
+	return result
+}
+
 func parseLeadingInt(s string) (int, error) {
 	var intEnd int
 	for intEnd < len(s) && '0' <= s[intEnd] && s[intEnd] <= '9' {
